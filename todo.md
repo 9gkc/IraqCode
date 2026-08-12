@@ -17,4 +17,4 @@
 - [x] Expand SQL from relational foundations through joins, aggregations, constraints, schema design, indexes, transactions, and a data-project capstone.
 - [x] Add stage-level learning objectives, formative checks, safe practice tasks, and capstone briefs in Arabic and English.
 - [x] Improve the learning interface to present levels, lesson counts, and professional milestones clearly.
-- [ ] Extend curriculum-integrity tests, verify the production build and live deployment, and update the 9gkc profile description.
+- [x] Extend curriculum-integrity tests, verify the production build and live deployment, and update the 9gkc profile description.
