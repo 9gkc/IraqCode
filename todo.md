@@ -18,3 +18,5 @@
 - [x] Add stage-level learning objectives, formative checks, safe practice tasks, and capstone briefs in Arabic and English.
 - [x] Improve the learning interface to present levels, lesson counts, and professional milestones clearly.
 - [x] Extend curriculum-integrity tests, verify the production build and live deployment, and update the 9gkc profile description.
+- [x] Create a professional IraqCode social-preview image for the GitHub repository only, without adding it to the live platform interface.
+- [x] Upload the image as the official GitHub repository social preview and verify the repository sharing settings.
