@@ -9,3 +9,12 @@
 - [x] Write unit tests for curriculum integrity, challenge validation, and progress calculations.
 - [x] Add professional repository documentation, governance files, Open Graph metadata, and GitHub Pages workflows.
 - [x] Publish IraqCode to GitHub Pages, validate the live experience, and add the project to the 9gkc profile repository.
+- [x] Audit the current five learning paths and define complete Foundation, Core, Applied, and Professional curricula.
+- [x] Expand Python from fundamentals through object-oriented design, files, errors, testing, packages, and a capstone project.
+- [x] Expand HTML/CSS from semantic foundations through responsive layouts, accessibility, forms, CSS architecture, and a portfolio project.
+- [x] Expand JavaScript from fundamentals through DOM work, asynchronous code, modules, testing, browser storage, APIs, and a capstone project.
+- [x] Expand Git/GitHub from local workflows through branching, pull requests, conflict resolution, issue tracking, and CI-ready project delivery.
+- [x] Expand SQL from relational foundations through joins, aggregations, constraints, schema design, indexes, transactions, and a data-project capstone.
+- [x] Add stage-level learning objectives, formative checks, safe practice tasks, and capstone briefs in Arabic and English.
+- [x] Improve the learning interface to present levels, lesson counts, and professional milestones clearly.
+- [ ] Extend curriculum-integrity tests, verify the production build and live deployment, and update the 9gkc profile description.

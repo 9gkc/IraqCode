@@ -25,13 +25,13 @@ Open the public platform at **[9gkc.github.io/IraqCode](https://9gkc.github.io/I
 
 | Path | Outcome |
 |---|---|
-| **Python Foundations** | Core programming logic and a study-tracker project outline. |
-| **HTML & CSS** | Semantic, responsive, accessible interface foundations and a portfolio-page project. |
-| **JavaScript** | Browser interaction, DOM work, asynchronous thinking, and a task-list project. |
-| **Git & GitHub** | Version-control workflow, readable history, collaboration hygiene, and a publish-ready repository mission. |
-| **SQL & Databases** | Structured queries, filtering, joins, data reasoning, and a small reporting project. |
+| **Python** | Fundamentals, functions, files, object-oriented design, data formats, testing, packages, logging, and a tested study-tracker capstone. |
+| **HTML & CSS** | Semantic HTML, forms, responsive layouts, accessibility, CSS architecture, performance, and a published portfolio capstone. |
+| **JavaScript** | Language fundamentals, DOM, state, browser storage, async code, modules, tests, performance, and a learning-dashboard capstone. |
+| **Git & GitHub** | Local workflow, branches, pull requests, conflict resolution, reviews, releases, GitHub Actions, security hygiene, and a review-ready repository capstone. |
+| **SQL & Databases** | Queries, joins, constraints, schema design, indexes, transactions, least privilege, migrations, and a progress-database capstone. |
 
-The initial curriculum contains **30 focused lessons** with bilingual explanations and four-option knowledge checks. Project Studio extends the curriculum with bounded engineering missions designed to encourage a public, reviewable portfolio without fabricating outcomes.
+Each learning path now contains **20 sequenced lessons** across four visible stages: Foundations, Core Skills, Applied Practice, and Professional Practice. The complete curriculum contains **100 bilingual lessons**, with learning objectives, code walkthroughs, four-option knowledge checks, safe practice directions, and a capstone brief per path. Project Studio extends the curriculum with bounded engineering missions designed to encourage a public, reviewable portfolio without fabricating outcomes.
 
 ## Interface areas
 

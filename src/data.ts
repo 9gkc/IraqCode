@@ -1,64 +1,189 @@
-import type { Bilingual, Lesson, Track, TrackId } from './types'
+import type { Bilingual, CurriculumStage, Lesson, StageId, Track, TrackId } from './types'
 
 const bi = (ar: string, en: string): Bilingual => ({ ar, en })
-const lesson = (
-  id: string, titleAr: string, titleEn: string, duration: number, objectiveAr: string, objectiveEn: string,
-  conceptAr: string, conceptEn: string, code: string, questionAr: string, questionEn: string,
-  choices: [string, string][], answer: number, explanationAr: string, explanationEn: string,
-): Lesson => ({
-  id, title: bi(titleAr, titleEn), duration, objective: bi(objectiveAr, objectiveEn), concept: bi(conceptAr, conceptEn), code,
-  challenge: { question: bi(questionAr, questionEn), choices: choices.map(([ar, en]) => bi(ar, en)), answer, explanation: bi(explanationAr, explanationEn) },
-})
 
-const t = (id: TrackId, ar: string, en: string, summaryAr: string, summaryEn: string, color: string, lessons: Lesson[]): Track => ({
-  id, title: bi(ar, en), summary: bi(summaryAr, summaryEn), color, level: bi('من المبتدئ إلى جاهز للمشاريع', 'Beginner to project-ready'), lessons,
-})
-
-export const tracks: Track[] = [
-  t('python', 'أساسيات Python', 'Python Foundations', 'ابنِ منطقك البرمجي ومشروع أدوات بسيط.', 'Build programming logic and a practical starter tool.', '#7c5cff', [
-    lesson('py-1', 'كيف يفكر البرنامج؟', 'How programs think', 12, 'تمييز البيانات والتعليمات والمخرجات.', 'Distinguish data, instructions, and outputs.', 'البرنامج سلسلة تعليمات دقيقة؛ ابدأ بمدخلات واضحة ثم اختبر النتيجة.', 'A program is a precise sequence of instructions; start with clear inputs and test the result.', 'name = "Ali"\nprint(f"Welcome, {name}")', 'ما وظيفة print؟', 'What does print do?', [['تخزن البيانات', 'Stores data'], ['تعرض قيمة للمستخدم', 'Shows a value to the user'], ['تكرّر الكود', 'Repeats code'], ['تنشئ ملفاً', 'Creates a file']], 1, 'print تعرض قيماً أو نصوصاً في المخرجات.', 'print shows values or text in the output.'),
-    lesson('py-2', 'المتغيرات والأنواع', 'Variables and types', 16, 'تخزين القيم واختيار النوع المناسب.', 'Store values and select the right type.', 'استخدم أسماء تصف المعنى؛ النصوص بين علامات اقتباس والأرقام لا تحتاجها.', 'Use names that describe meaning; strings use quotes while numbers do not.', 'student = "Zahraa"\nhours = 3\nactive = True', 'أي قيمة تمثل Boolean؟', 'Which value is Boolean?', [['"3"', '"3"'], ['3', '3'], ['True', 'True'], ['3.0', '3.0']], 2, 'True وFalse قيمتان منطقيتان.', 'True and False are Boolean values.'),
-    lesson('py-3', 'الشروط والقرارات', 'Conditions and decisions', 18, 'تطبيق if لاتخاذ قرار واضح.', 'Apply if to make a clear decision.', 'المقارنات تعيد True أو False، وتتحكم if في المسار الذي ينفذ.', 'Comparisons return True or False, and if controls which path runs.', 'score = 82\nif score >= 50:\n    print("Passed")\nelse:\n    print("Try again")', 'متى ينفذ else؟', 'When does else run?', [['دائماً', 'Always'], ['عندما يكون الشرط False', 'When the condition is False'], ['قبل if', 'Before if'], ['بعد print فقط', 'After print only']], 1, 'else هو المسار البديل عندما لا يتحقق الشرط.', 'else is the alternative path when the condition is not met.'),
-    lesson('py-4', 'الحلقات والقوائم', 'Loops and lists', 20, 'التعامل مع مجموعة عناصر دون تكرار يدوي.', 'Work with a group of items without manual repetition.', 'القائمة تجمع قيماً مرتبة، وfor تمر على كل عنصر فيها.', 'A list groups ordered values, and for visits every item.', 'skills = ["Python", "Git", "SQL"]\nfor skill in skills:\n    print(skill)', 'ما الذي تمثله skill داخل الحلقة؟', 'What does skill represent inside the loop?', [['كل القائمة', 'The entire list'], ['العنصر الحالي', 'The current item'], ['عدد العناصر', 'The item count'], ['اسم الحلقة', 'The loop name']], 1, 'في كل دورة تحمل skill عنصراً واحداً من القائمة.', 'On each iteration, skill holds one item from the list.'),
-    lesson('py-5', 'الدوال وإعادة الاستخدام', 'Functions and reuse', 22, 'إنشاء دالة صغيرة قابلة للاختبار.', 'Create a small testable function.', 'الدالة تجمع سلوكاً له اسم ومدخلات، وتمنع نسخ المنطق في أماكن متعددة.', 'A function groups named behavior and inputs, preventing duplicated logic.', 'def welcome(name):\n    return f"Welcome, {name}"\n\nprint(welcome("Sara"))', 'لماذا نستخدم return؟', 'Why use return?', [['لإيقاف الإنترنت', 'To stop the internet'], ['لإرجاع نتيجة من الدالة', 'To send a result back from a function'], ['لطباعة كل شيء', 'To print everything'], ['لإنشاء قائمة', 'To create a list']], 1, 'return تعيد قيمة ليستخدمها جزء آخر من البرنامج.', 'return sends a value back for another part of the program to use.'),
-    lesson('py-6', 'مشروع: متعقب دراسة', 'Project: study tracker', 28, 'تجميع الأساسيات في أداة دراسة صغيرة.', 'Combine the fundamentals in a small study tool.', 'المشروع الجيد يقسم المشكلة إلى بيانات ودوال وشروط ومخرجات قابلة للتحقق.', 'A good project separates the problem into data, functions, conditions, and verifiable output.', 'minutes = [25, 40, 30]\ntotal = sum(minutes)\nprint(f"Study minutes: {total}")', 'ما الناتج الصحيح لـ total؟', 'What is the correct value of total?', [['25', '25'], ['40', '40'], ['95', '95'], ['3', '3']], 2, 'sum يجمع عناصر قائمة الأرقام: 25 + 40 + 30 = 95.', 'sum adds numeric list items: 25 + 40 + 30 = 95.'),
-  ]),
-  t('web', 'HTML وCSS', 'HTML & CSS', 'صمّم واجهات ويب دلالية ومتجاوبة ويمكن الوصول إليها.', 'Design semantic, responsive, accessible web interfaces.', '#00b8a9', [
-    lesson('web-1', 'هيكل صفحة الويب', 'The web page structure', 14, 'فهم دور HTML في وصف المحتوى.', 'Understand HTML’s role in describing content.', 'HTML يعبّر عن بنية ومعنى المحتوى، وليس عن الألوان والتخطيط.', 'HTML expresses content structure and meaning, not colors and layout.', '<main>\n  <h1>My learning plan</h1>\n  <p>One lesson today.</p>\n</main>', 'أي عنصر هو العنوان الرئيسي؟', 'Which element is the main heading?', [['main', 'main'], ['h1', 'h1'], ['p', 'p'], ['body', 'body']], 1, 'استخدم h1 للعنوان الرئيسي الفريد للصفحة.', 'Use h1 for the page’s unique main heading.'),
-    lesson('web-2', 'الدلالة وإتاحة الوصول', 'Semantics and accessibility', 18, 'اختيار عناصر HTML ذات المعنى الصحيح.', 'Choose HTML elements with the right meaning.', 'استعمال button وnav وlabel الصحيح يجعل الواجهة أفضل للمستخدمين وتقنيات المساعدة.', 'Using the correct button, nav, and label improves the interface for people and assistive technologies.', '<button type="button">Save progress</button>\n<nav aria-label="Lesson navigation">...</nav>', 'متى تفضّل button على div؟', 'When should you prefer button over div?', [['لعنصر تفاعلي ينفذ إجراء', 'For an interactive element that performs an action'], ['للعنوان فقط', 'For a heading only'], ['لصورة فقط', 'For an image only'], ['لا فرق', 'There is no difference']], 0, 'button يحمل سلوكاً دلالياً ويدعم لوحة المفاتيح افتراضياً.', 'button carries semantic behavior and supports keyboards by default.'),
-    lesson('web-3', 'أساسيات CSS', 'CSS foundations', 18, 'تطبيق أنماط قابلة للصيانة على مكوّن.', 'Apply maintainable styles to a component.', 'اجعل CSS يصف المظهر؛ ابدأ بمقاسات ومسافات وألوان متسقة.', 'Let CSS describe appearance; start with consistent sizing, spacing, and colors.', '.card {\n  padding: 1rem;\n  border-radius: 12px;\n  background: #ffffff;\n}', 'أي خاصية تضيف المساحة داخل البطاقة؟', 'Which property adds space inside the card?', [['margin', 'margin'], ['padding', 'padding'], ['color', 'color'], ['display', 'display']], 1, 'padding هي المسافة بين المحتوى وحدود العنصر.', 'padding is the space between content and an element’s border.'),
-    lesson('web-4', 'Flexbox للتخطيط', 'Layout with Flexbox', 22, 'ترتيب عناصر الواجهة بمرونة.', 'Arrange interface elements flexibly.', 'Flexbox مناسب لمحور واحد مثل صف الأزرار أو عمود بطاقة المحتوى.', 'Flexbox is ideal for one axis, such as a button row or a content-card column.', '.actions {\n  display: flex;\n  gap: 0.75rem;\n  align-items: center;\n}', 'ما الذي ينشئ مساحة بين العناصر؟', 'What creates space between items?', [['gap', 'gap'], ['color', 'color'], ['font', 'font'], ['position', 'position']], 0, 'gap يضيف فراغاً منظماً بين عناصر flex أو grid.', 'gap adds consistent space between flex or grid items.'),
-    lesson('web-5', 'تصميم متجاوب', 'Responsive design', 22, 'تكييف الواجهة مع الشاشات الصغيرة.', 'Adapt an interface for smaller screens.', 'ابدأ من الهاتف ثم أضف تحسينات للشاشات الأوسع عبر media queries.', 'Start with mobile, then enhance wider layouts with media queries.', '.grid { display: grid; grid-template-columns: 1fr; }\n@media (min-width: 800px) {\n  .grid { grid-template-columns: repeat(3, 1fr); }\n}', 'متى تصبح الشبكة ثلاثة أعمدة؟', 'When does the grid become three columns?', [['عند 800px أو أكثر', 'At 800px or wider'], ['دائماً', 'Always'], ['عند الطباعة', 'When printing'], ['عند النقر', 'When clicked']], 0, 'شرط min-width يطبّق النمط عند بلوغ العرض المحدد.', 'min-width applies a style at or above the specified width.'),
-    lesson('web-6', 'مشروع: صفحة Portfolio', 'Project: portfolio page', 30, 'بناء صفحة تعريف قابلة للنشر.', 'Build a publishable introduction page.', 'قسّم الصفحة إلى header وmain وsections ذات عناوين، ثم اجعل كل رابط واضح الهدف.', 'Split the page into header, main, and headed sections, then make every link’s purpose clear.', '<section aria-labelledby="projects">\n  <h2 id="projects">Projects</h2>\n  <a href="https://github.com/">View source</a>\n</section>', 'لماذا يستخدم aria-labelledby هنا؟', 'Why use aria-labelledby here?', [['لربط القسم بعنوانه', 'To associate the section with its heading'], ['لتغيير اللون', 'To change color'], ['لتشغيل JavaScript', 'To run JavaScript'], ['لإخفاء القسم', 'To hide the section']], 0, 'يربط aria-labelledby القسم بعنوان مفهوم لقارئات الشاشة.', 'aria-labelledby connects the section to a meaningful screen-reader heading.'),
-  ]),
-  t('javascript', 'JavaScript', 'JavaScript', 'أضف التفاعل والمنطق إلى واجهات الويب.', 'Add interaction and logic to web interfaces.', '#f7b801', [
-    lesson('js-1', 'القيم والمتغيرات', 'Values and variables', 15, 'استخدام const وlet بوضوح.', 'Use const and let clearly.', 'استخدم const للقيم التي لا ستتغير، وlet للحالة التي تتغير.', 'Use const for values that will not change and let for changing state.', 'const course = "JavaScript"\nlet completed = 0\ncompleted += 1', 'أي متغير يمكن تحديثه هنا؟', 'Which variable can be updated here?', [['course', 'course'], ['completed', 'completed'], ['كلاهما', 'Both'], ['لا واحد', 'Neither']], 1, 'let يسمح بإعادة الإسناد، بينما const لا يسمح بذلك.', 'let allows reassignment; const does not.'),
-    lesson('js-2', 'الدوال والأحداث', 'Functions and events', 20, 'ربط فعل المستخدم بدالة صغيرة.', 'Connect a user action to a small function.', 'event listener يستمع للفعل ثم يستدعي دالة واضحة المسؤولية.', 'An event listener listens for an action, then calls a clearly scoped function.', 'const button = document.querySelector("button")\nbutton?.addEventListener("click", () => {\n  console.log("Lesson started")\n})', 'متى ينفذ console.log؟', 'When does console.log run?', [['عند تحميل الصفحة فقط', 'Only on page load'], ['عند نقر الزر', 'When the button is clicked'], ['كل ثانية', 'Every second'], ['لا ينفذ', 'It never runs']], 1, 'مستمع click ينفذ الدالة بعد نقر المستخدم.', 'The click listener runs the function after the user clicks.'),
-    lesson('js-3', 'المصفوفات والكائنات', 'Arrays and objects', 20, 'تمثيل مجموعة وكيان ببيانات منظمة.', 'Represent a collection and an entity with structured data.', 'المصفوفة لقائمة عناصر، والكائن لخصائص عنصر واحد.', 'An array is for a list of items; an object is for properties of one item.', 'const learner = { name: "Noor", xp: 120 }\nconst tracks = ["Python", "Web"]\nconsole.log(learner.xp)', 'كيف نصل إلى XP للطالب؟', 'How do we access the learner XP?', [['learner[xp]', 'learner[xp]'], ['learner.xp', 'learner.xp'], ['tracks.xp', 'tracks.xp'], ['xp.learner', 'xp.learner']], 1, 'dot notation تصل إلى خاصية مسماة داخل الكائن.', 'Dot notation accesses a named object property.'),
-    lesson('js-4', 'التعامل مع DOM', 'Working with the DOM', 22, 'تحديث جزء محدد من الصفحة بأمان.', 'Update a specific part of the page safely.', 'DOM هو تمثيل الصفحة في المتصفح؛ اختر عناصر محددة وتحقق من وجودها قبل الاستخدام.', 'The DOM is the browser’s page representation; select specific elements and check they exist before use.', 'const status = document.querySelector("#status")\nif (status) status.textContent = "Complete"', 'ما الذي يتغير في المثال؟', 'What changes in this example?', [['عنوان المتصفح', 'Browser title'], ['نص العنصر status', 'The status element text'], ['عنوان URL', 'The URL'], ['ملف CSS', 'The CSS file']], 1, 'textContent يغيّر النص المعروض داخل العنصر.', 'textContent changes the text displayed inside the element.'),
-    lesson('js-5', 'التدفق غير المتزامن', 'Asynchronous flow', 24, 'فهم await دون حجب الواجهة.', 'Understand await without blocking the interface.', 'العمليات البطيئة مثل الشبكة تحتاج حالة تحميل ونجاح وخطأ واضحة.', 'Slow work like networking needs clear loading, success, and error states.', 'async function loadProfile() {\n  const response = await fetch("/profile.json")\n  return response.json()\n}', 'ماذا ينتظر await؟', 'What does await wait for?', [['الاستجابة قبل المتابعة', 'The response before continuing'], ['تغيير اللون', 'A color change'], ['نقر الزر', 'A button click'], ['إيقاف الصفحة', 'Stopping the page']], 0, 'await تنتظر اكتمال Promise داخل دالة async.', 'await waits for a Promise inside an async function.'),
-    lesson('js-6', 'مشروع: قائمة مهام', 'Project: task list', 30, 'تصميم منطق حالة صغير وواجهته.', 'Design a small state model and interface.', 'افصل البيانات عن العرض: حدث يغير الحالة، ثم دالة تعيد رسم النتيجة.', 'Separate data from display: an event changes state, then a function renders the result.', 'const tasks = ["Read", "Build"]\nconst completed = tasks.filter((task) => task !== "Build")\nconsole.log(completed)', 'كم عنصراً في completed؟', 'How many items are in completed?', [['0', '0'], ['1', '1'], ['2', '2'], ['3', '3']], 1, 'filter يعيد العناصر التي تحقق الشرط، وهنا Read فقط.', 'filter returns items that meet the condition—only Read here.'),
-  ]),
-  t('git', 'Git وGitHub', 'Git & GitHub', 'نظّم تاريخ الكود وانشر مشاريع قابلة للمراجعة.', 'Organize code history and publish reviewable projects.', '#f05033', [
-    lesson('git-1', 'فكرة التحكم بالإصدارات', 'Version control mindset', 12, 'فهم الـcommit كسجل قابل للرجوع.', 'Understand a commit as a reversible record.', 'Git يسجل تغييرات ذات معنى، وليس مجرد نسخ عشوائية من الملفات.', 'Git records meaningful changes instead of random file copies.', 'git status\ngit add src/App.tsx\ngit commit -m "feat: add lesson view"', 'ما الذي يصفه commit الجيد؟', 'What does a good commit describe?', [['تغييراً محدداً', 'A specific change'], ['كل المشروع دائماً', 'The entire project always'], ['اسم المستخدم', 'The username'], ['لون الموقع', 'The site color']], 0, 'رسالة الـcommit تشرح تغييراً صغيراً واضحاً.', 'A commit message explains one clear, small change.'),
-    lesson('git-2', 'الـbranch ومساحة العمل', 'Branches and workspace', 18, 'استخدام فرع لتجربة تحسين مستقل.', 'Use a branch for an isolated improvement.', 'الفرع مساحة عمل لتغيير موضوع واحد دون إرباك الفرع الرئيسي.', 'A branch is a workspace for one change without disrupting the main branch.', 'git switch -c feat/profile-card\n# make one focused change\ngit status', 'لماذا ننشئ branch؟', 'Why create a branch?', [['لتجربة تغيير مستقل', 'To work on an isolated change'], ['لحذف Git', 'To delete Git'], ['لتشغيل الموقع', 'To run the site'], ['لتبديل اللغة', 'To change language']], 0, 'الفروع تجعل التغييرات قابلة للمراجعة والدمج بأمان.', 'Branches make changes reviewable and safer to merge.'),
-    lesson('git-3', 'README مهني', 'A professional README', 16, 'كتابة مدخل واضح للمشروع.', 'Write a clear project entry point.', 'README يشرح الهدف وطريقة التشغيل والميزات والحدود وروابط النشر.', 'A README explains purpose, setup, features, boundaries, and live links.', '# Project name\n\n> One-sentence value statement.\n\n## Run locally\n## Features\n## License', 'ما أول شيء يجب أن يفهمه الزائر؟', 'What should a visitor understand first?', [['قيمة المشروع وهدفه', 'The project value and purpose'], ['لون المحرر', 'Editor color'], ['كلمة المرور', 'A password'], ['اسم الفرع فقط', 'Only the branch name']], 0, 'ابدأ برسالة واضحة عن ما يحلّه المشروع ومن يستفيد منه.', 'Start with a clear message about what the project solves and who benefits.'),
-    lesson('git-4', 'Pull Request كمراجعة', 'Pull requests as review', 20, 'وصف التغيير واختباره قبل الدمج.', 'Describe and test a change before merging.', 'Pull Request جيد يشرح السياق والتغيير والاختبارات والمخاطر المعروفة.', 'A good pull request explains context, changes, tests, and known risks.', '## Summary\n- Adds lesson completion state\n\n## Validation\n- pnpm test\n- pnpm build', 'ما فائدة قسم Validation؟', 'What is the purpose of Validation?', [['إثبات ما تم فحصه', 'To show what was checked'], ['إخفاء الكود', 'To hide code'], ['تغيير الترخيص', 'To change the license'], ['توليد كلمة مرور', 'To generate a password']], 0, 'يوضح للمراجع كيف تحقق صاحب التغيير من النتيجة.', 'It shows reviewers how the author verified the result.'),
-    lesson('git-5', 'النشر عبر GitHub Pages', 'Deploying with GitHub Pages', 22, 'فهم فرق البناء عن النشر.', 'Understand the difference between build and deployment.', 'البناء ينتج ملفات ثابتة؛ النشر يجعلها متاحة من رابط عام.', 'Build produces static files; deployment makes them available at a public URL.', 'pnpm build\n# dist/ contains the production files\n# GitHub Actions publishes them to Pages', 'أين توجد ملفات الإنتاج بعد البناء؟', 'Where are production files after building?', [['src/', 'src/'], ['dist/', 'dist/'], ['node_modules/', 'node_modules/'], ['.git/', '.git/']], 1, 'Vite يضع نتيجة الإنتاج في dist افتراضياً.', 'Vite places production output in dist by default.'),
-    lesson('git-6', 'مشروع: إطلاق مستودع', 'Project: repository launch', 28, 'تجهيز مشروع عام قابل للمشاركة.', 'Prepare a shareable public project.', 'الإطلاق المهني يجمع README، ترخيصاً، سياسة أمن، اختبارات، ورابطاً حياً.', 'A professional launch brings together a README, license, security policy, tests, and a live link.', 'git add .\ngit commit -m "feat: publish project foundation"\ngit push origin main', 'ما الإجراء الذي يرسل التغييرات إلى GitHub؟', 'Which command sends changes to GitHub?', [['git add', 'git add'], ['git commit', 'git commit'], ['git push', 'git push'], ['git status', 'git status']], 2, 'git push يرسل الـcommits المحلية إلى المستودع البعيد.', 'git push sends local commits to the remote repository.'),
-  ]),
-  t('sql', 'SQL وقواعد البيانات', 'SQL & Databases', 'تعلم الاستعلامات المنظمة والتفكير في البيانات.', 'Learn structured queries and data thinking.', '#30a4db', [
-    lesson('sql-1', 'الجداول والصفوف', 'Tables and rows', 14, 'تمييز الجدول عن الصف والعمود.', 'Distinguish tables, rows, and columns.', 'الجدول يمثل كياناً مثل learners، والصف سجل واحد، والعمود خاصية.', 'A table represents an entity like learners; a row is one record and a column is one property.', 'CREATE TABLE learners (\n  id INTEGER PRIMARY KEY,\n  name TEXT NOT NULL\n);', 'ما الذي يمثله name؟', 'What does name represent?', [['جدولاً', 'A table'], ['عموداً', 'A column'], ['قاعدة بيانات كاملة', 'A full database'], ['استعلام حذف', 'A delete query']], 1, 'name عمود يخزن خاصية الاسم لكل سجل.', 'name is a column that stores the name property for each record.'),
-    lesson('sql-2', 'قراءة البيانات بـ SELECT', 'Reading data with SELECT', 18, 'قراءة الحقول التي تحتاجها فقط.', 'Read only the fields you need.', 'ابدأ باستعلامات محددة بدلاً من SELECT * كي تكون النتيجة أوضح وأقل عرضة للأخطاء.', 'Start with specific queries rather than SELECT * so results are clearer and less error-prone.', 'SELECT name, xp\nFROM learners\nWHERE xp >= 100;', 'ما الذي يفعله WHERE؟', 'What does WHERE do?', [['يرتب الأعمدة', 'Orders columns'], ['يصفّي الصفوف', 'Filters rows'], ['ينشئ جدولاً', 'Creates a table'], ['يحذف قاعدة البيانات', 'Deletes the database']], 1, 'WHERE يحدد أي الصفوف تدخل في النتيجة.', 'WHERE specifies which rows appear in the result.'),
-    lesson('sql-3', 'إضافة وتحديث البيانات', 'Adding and updating data', 20, 'التفريق بين INSERT وUPDATE.', 'Differentiate INSERT from UPDATE.', 'INSERT يضيف سجلاً جديداً؛ UPDATE يغير سجلاً موجوداً مع شرط واضح.', 'INSERT adds a new record; UPDATE changes an existing record with a clear condition.', 'UPDATE learners\nSET xp = 140\nWHERE id = 7;', 'لماذا يجب أن يتضمن UPDATE شرطاً؟', 'Why should an UPDATE include a condition?', [['لتجنب تعديل كل الصفوف', 'To avoid changing every row'], ['لزيادة السرعة فقط', 'For speed only'], ['لإنشاء جدول', 'To create a table'], ['لا حاجة لشرط', 'No condition is needed']], 0, 'شرط WHERE يحصر التعديل في السجل المقصود.', 'A WHERE condition limits the change to the intended record.'),
-    lesson('sql-4', 'الربط بين الجداول', 'Joining tables', 24, 'دمج بيانات مرتبطة دون تكرار غير ضروري.', 'Combine related data without unnecessary duplication.', 'المفاتيح تربط الكيانات؛ JOIN يعرض بيانات متصلة من جدولين.', 'Keys connect entities; JOIN presents related data from two tables.', 'SELECT learners.name, projects.title\nFROM learners\nJOIN projects ON projects.learner_id = learners.id;', 'ما الذي يحدد العلاقة في المثال؟', 'What defines the relationship in the example?', [['projects.title', 'projects.title'], ['projects.learner_id = learners.id', 'projects.learner_id = learners.id'], ['SELECT', 'SELECT'], ['name فقط', 'name only']], 1, 'جملة ON تحدد الأعمدة المرتبطة بين الجدولين.', 'The ON clause defines the linked columns between the tables.'),
-    lesson('sql-5', 'السلامة ومعاملات الاستعلام', 'Safety and query parameters', 22, 'تجنب إدخال المستخدم داخل نص SQL مباشرة.', 'Avoid placing user input directly in SQL text.', 'استخدم parameterized queries مع أي بيانات خارجية؛ لا تبنِ استعلاماً بالربط النصي.', 'Use parameterized queries with external data; do not build a query with string concatenation.', 'SELECT * FROM learners\nWHERE email = ?;\n-- parameter: learner@example.com', 'لماذا نستخدم placeholder ؟', 'Why use a placeholder?', [['لفصل البيانات عن نص الاستعلام', 'To separate data from query text'], ['لإخفاء الجدول', 'To hide the table'], ['لحذف المستخدم', 'To delete the user'], ['لتغيير CSS', 'To change CSS']], 0, 'المعاملات تمنع تحويل قيمة المستخدم إلى جزء من منطق الاستعلام.', 'Parameters prevent user values from becoming part of query logic.'),
-    lesson('sql-6', 'مشروع: لوحة تقدم', 'Project: progress dashboard', 30, 'تصميم استعلام يعرض تقدم المتعلم.', 'Design a query that presents learner progress.', 'لوحة البيانات الجيدة تستخدم تجميعات مفهومة وتعرض القياسات التي تقود قراراً.', 'A good dashboard uses understandable aggregations and shows measurements that drive a decision.', 'SELECT track, COUNT(*) AS completed\nFROM lesson_progress\nWHERE completed = 1\nGROUP BY track;', 'ما الذي يحسبه COUNT هنا؟', 'What does COUNT calculate here?', [['عدد الدروس المكتملة لكل مسار', 'Completed lessons per track'], ['نص المسار', 'Track text'], ['لون البطاقة', 'Card color'], ['تاريخ اليوم', 'Today’s date']], 0, 'COUNT مع GROUP BY يحسب السجلات لكل قيمة track.', 'COUNT with GROUP BY counts records for each track value.'),
-  ]),
+const stages: CurriculumStage[] = [
+  { id: 'foundation', title: bi('المستوى 1: الأساسيات', 'Level 1: Foundations'), summary: bi('ابدأ بالمفاهيم والبيئة والمفردات الأساسية دون افتراض خبرة سابقة.', 'Start with the core concepts, environment, and vocabulary with no prior experience assumed.'), outcome: bi('تقرأ أمثلة بسيطة وتكتبها وتفهم ناتجها.', 'Read, write, and explain simple examples.') },
+  { id: 'core', title: bi('المستوى 2: المهارات الجوهرية', 'Level 2: Core skills'), summary: bi('ابنِ المنطق القابل لإعادة الاستخدام ونماذج البيانات المنظمة.', 'Build reusable logic and organized data models.'), outcome: bi('تحل مسائل متوسطة وتفككها إلى خطوات قابلة للاختبار.', 'Solve intermediate problems by breaking them into testable steps.') },
+  { id: 'applied', title: bi('المستوى 3: التطبيق العملي', 'Level 3: Applied practice'), summary: bi('اربط المفاهيم بواجهة أو بيانات أو تدفق عمل حقيقي.', 'Connect concepts to a real interface, data set, or workflow.'), outcome: bi('تبني ميزة عملية صغيرة وتتحقق من سلوكها.', 'Build a small practical feature and validate its behavior.') },
+  { id: 'professional', title: bi('المستوى 4: الاحتراف والمشروع', 'Level 4: Professional practice'), summary: bi('ركز على الجودة والاختبارات والتوثيق والتسليم القابل للمراجعة.', 'Focus on quality, tests, documentation, and reviewable delivery.'), outcome: bi('تسلّم مشروعاً منظمًا قابلاً للعرض والتحسين.', 'Deliver a structured project that can be presented and improved.') },
 ]
 
+type Topic = { ar: string; en: string }
+type TrackBlueprint = {
+  id: TrackId; ar: string; en: string; summaryAr: string; summaryEn: string; color: string
+  samples: Record<StageId, string>
+  topics: Record<StageId, Topic[]>
+}
+
+const stageObjective = (stage: CurriculumStage, topic: Topic) => bi(
+  `تعلّم ${topic.ar} ضمن ${stage.title.ar}، ثم طبّق الفكرة في مثال قصير قابل للتحقق.`,
+  `Learn ${topic.en} in ${stage.title.en}, then apply the idea in a short verifiable example.`,
+)
+
+const stageConcept = (stage: CurriculumStage, topic: Topic) => bi(
+  `${topic.ar} ليست معلومة للحفظ؛ هي خطوة عملية تساعدك على ${stage.outcome.ar}`,
+  `${topic.en} is not a fact to memorize; it is a practical step that helps you ${stage.outcome.en.toLowerCase()}`,
+)
+
+const makeLessons = (blueprint: TrackBlueprint): Lesson[] => stages.flatMap((stage) => blueprint.topics[stage.id].map((topic, index) => ({
+  id: `${blueprint.id}-${stage.id}-${index + 1}`,
+  stage: stage.id,
+  title: bi(topic.ar, topic.en),
+  duration: 16 + index * 3,
+  objective: stageObjective(stage, topic),
+  concept: stageConcept(stage, topic),
+  code: blueprint.samples[stage.id],
+  challenge: {
+    question: bi(`ما المخرج المتوقع من درس «${topic.ar}»؟`, `What outcome should you expect from “${topic.en}”?`),
+    choices: [
+      bi(stage.outcome.ar, stage.outcome.en),
+      bi('تجاوز التطبيق العملي والانتقال إلى الموضوع التالي.', 'Skip practice and move straight to the next topic.'),
+      bi('نسخ الكود دون فهم أو تحقق من النتيجة.', 'Copy code without understanding or checking the result.'),
+      bi('تعديل ملفات المشروع عشوائياً دون هدف.', 'Change project files randomly without a goal.'),
+    ],
+    answer: 0,
+    explanation: bi(`الإجابة الصحيحة ترتبط بهدف ${stage.title.ar}: ${stage.outcome.ar}`, `The correct answer matches the ${stage.title.en} outcome: ${stage.outcome.en}`),
+  },
+})))
+
+const blueprints: TrackBlueprint[] = [
+  {
+    id: 'python', ar: 'Python: من الصفر إلى المشاريع', en: 'Python: zero to projects', color: '#7c5cff',
+    summaryAr: 'منطق برمجي، أدوات عملية، اختبارات، ومشروع Python منظم.', summaryEn: 'Programming logic, practical tools, tests, and a structured Python project.',
+    samples: {
+      foundation: 'name = "Zahraa"\nminutes = 45\nprint(f"{name}: {minutes} min")',
+      core: 'def average(values):\n    return sum(values) / len(values)\n\nprint(average([80, 90, 100]))',
+      applied: 'from pathlib import Path\n\nnotes = Path("notes.txt")\nnotes.write_text("Build, test, improve\\n")',
+      professional: 'def test_average():\n    assert average([2, 4]) == 3\n\nif __name__ == "__main__":\n    test_average()',
+    },
+    topics: {
+      foundation: [
+        { ar: 'بيئة Python وprint', en: 'Python environment and print' }, { ar: 'المتغيرات والأنواع', en: 'Variables and types' }, { ar: 'النصوص والأرقام والتحويل', en: 'Strings, numbers, and conversion' }, { ar: 'المقارنات والشروط', en: 'Comparisons and conditions' }, { ar: 'الحلقات والقوائم', en: 'Loops and lists' },
+      ],
+      core: [
+        { ar: 'الدوال والمدخلات وreturn', en: 'Functions, parameters, and return' }, { ar: 'القواميس والمجموعات', en: 'Dictionaries and sets' }, { ar: 'الفهارس والتقطيع', en: 'Indexing and slicing' }, { ar: 'الاستثناءات ومعالجة الأخطاء', en: 'Exceptions and error handling' }, { ar: 'الملفات وPathlib', en: 'Files and Pathlib' },
+      ],
+      applied: [
+        { ar: 'الوحدات وبيئات المشروع', en: 'Modules and project environments' }, { ar: 'البرمجة الكائنية الأساسية', en: 'Object-oriented fundamentals' }, { ar: 'التراكيب الاستيعابية والمولدات', en: 'Comprehensions and generators' }, { ar: 'قراءة JSON وCSV', en: 'Reading JSON and CSV' }, { ar: 'بناء أداة سطر أوامر صغيرة', en: 'Building a small command-line tool' },
+      ],
+      professional: [
+        { ar: 'التفكير الاختباري وpytest', en: 'Testing mindset and pytest' }, { ar: 'type hints والتوثيق', en: 'Type hints and documentation' }, { ar: 'تنظيم الحزم وإدارة الاعتماديات', en: 'Package structure and dependencies' }, { ar: 'التسجيل Logging وتهيئة التطبيق', en: 'Logging and application configuration' }, { ar: 'مشروع احترافي: متعقب دراسة قابل للاختبار', en: 'Professional project: tested study tracker' },
+      ],
+    },
+  },
+  {
+    id: 'web', ar: 'HTML وCSS: واجهات احترافية', en: 'HTML & CSS: professional interfaces', color: '#00b8a9',
+    summaryAr: 'بنية دلالية، تصميم متجاوب، إتاحة وصول، وموقع Portfolio قابل للنشر.', summaryEn: 'Semantic structure, responsive design, accessibility, and a publishable portfolio.',
+    samples: {
+      foundation: '<main>\n  <h1>My learning plan</h1>\n  <p>One focused lesson today.</p>\n</main>',
+      core: '.card {\n  display: grid;\n  gap: 1rem;\n  padding: 1.25rem;\n  border-radius: 1rem;\n}',
+      applied: '.projects {\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));\n  gap: 1rem;\n}',
+      professional: '@media (prefers-reduced-motion: reduce) {\n  * {\n    animation-duration: 0.01ms;\n    transition-duration: 0.01ms;\n  }\n}',
+    },
+    topics: {
+      foundation: [
+        { ar: 'هيكل الوثيقة وعناصر HTML', en: 'Document structure and HTML elements' }, { ar: 'العناوين والنصوص والقوائم', en: 'Headings, text, and lists' }, { ar: 'الروابط والصور والمسارات', en: 'Links, images, and paths' }, { ar: 'النماذج والحقول والتسميات', en: 'Forms, fields, and labels' }, { ar: 'CSS selectors والأولوية', en: 'CSS selectors and cascade' },
+      ],
+      core: [
+        { ar: 'نموذج الصندوق والمسافات', en: 'Box model and spacing' }, { ar: 'الألوان والطباعة وCSS variables', en: 'Color, type, and CSS variables' }, { ar: 'Flexbox للتخطيط', en: 'Layout with Flexbox' }, { ar: 'CSS Grid للواجهات', en: 'CSS Grid for interfaces' }, { ar: 'الدلالة وإتاحة الوصول', en: 'Semantics and accessibility' },
+      ],
+      applied: [
+        { ar: 'التصميم المتجاوب Mobile-first', en: 'Mobile-first responsive design' }, { ar: 'مكونات واجهة قابلة لإعادة الاستخدام', en: 'Reusable interface components' }, { ar: 'الحالات hover وfocus وactive', en: 'Hover, focus, and active states' }, { ar: 'تصميم النماذج ورسائل الخطأ', en: 'Form design and error messages' }, { ar: 'أنماط صفحة Portfolio', en: 'Portfolio page patterns' },
+      ],
+      professional: [
+        { ar: 'إتاحة الوصول عبر لوحة المفاتيح', en: 'Keyboard accessibility' }, { ar: 'اختبار التصميم على الأجهزة', en: 'Testing layouts across devices' }, { ar: 'تحسين الصور وأداء CSS', en: 'Image and CSS performance' }, { ar: 'تنظيم CSS وقابلية الصيانة', en: 'CSS organization and maintainability' }, { ar: 'مشروع احترافي: Portfolio متجاوب ومنشور', en: 'Professional project: responsive published portfolio' },
+      ],
+    },
+  },
+  {
+    id: 'javascript', ar: 'JavaScript: منطق الويب', en: 'JavaScript: web logic', color: '#f7b801',
+    summaryAr: 'منطق وتفاعل وبيانات غير متزامنة واختبارات ومشروع واجهة.', summaryEn: 'Logic, interaction, asynchronous data, tests, and an interface project.',
+    samples: {
+      foundation: 'const course = "JavaScript"\nlet completed = 0\ncompleted += 1\nconsole.log({ course, completed })',
+      core: 'const learners = [{ name: "Noor", xp: 120 }]\nconst names = learners.map((learner) => learner.name)\nconsole.log(names)',
+      applied: 'async function loadProfile() {\n  const response = await fetch("/profile.json")\n  if (!response.ok) throw new Error("Request failed")\n  return response.json()\n}',
+      professional: 'export function calculateXp(lessons) {\n  return lessons * 20\n}\n\nconsole.assert(calculateXp(3) === 60)',
+    },
+    topics: {
+      foundation: [
+        { ar: 'القيم والمتغيرات وconst/let', en: 'Values, variables, const, and let' }, { ar: 'العمليات والمقارنات', en: 'Operators and comparisons' }, { ar: 'الشروط والمنطق', en: 'Conditions and boolean logic' }, { ar: 'الدوال والنطاق Scope', en: 'Functions and scope' }, { ar: 'المصفوفات والحلقات', en: 'Arrays and loops' },
+      ],
+      core: [
+        { ar: 'الكائنات وdestructuring', en: 'Objects and destructuring' }, { ar: 'map وfilter وreduce', en: 'map, filter, and reduce' }, { ar: 'DOM واختيار العناصر', en: 'DOM and element selection' }, { ar: 'الأحداث وإدارة الحالة', en: 'Events and state management' }, { ar: 'JSON وlocalStorage', en: 'JSON and localStorage' },
+      ],
+      applied: [
+        { ar: 'Promises وasync/await', en: 'Promises and async/await' }, { ar: 'fetch وحالات التحميل والخطأ', en: 'fetch, loading, and error states' }, { ar: 'الوحدات ES modules', en: 'ES modules' }, { ar: 'نماذج تفاعلية والتحقق من المدخلات', en: 'Interactive forms and input validation' }, { ar: 'بناء قائمة مهام منظمة', en: 'Building a structured task list' },
+      ],
+      professional: [
+        { ar: 'تنقية الإدخال وDOM الآمن', en: 'Input handling and safe DOM updates' }, { ar: 'الاختبارات الوحدوية', en: 'Unit testing' }, { ar: 'التعامل مع الأخطاء والتسجيل', en: 'Error handling and logging' }, { ar: 'قياس الأداء وWeb Vitals', en: 'Performance and Web Vitals' }, { ar: 'مشروع احترافي: لوحة بيانات تعلم', en: 'Professional project: learning dashboard' },
+      ],
+    },
+  },
+  {
+    id: 'git', ar: 'Git وGitHub: تسليم احترافي', en: 'Git & GitHub: professional delivery', color: '#f05033',
+    summaryAr: 'تحكم بالإصدارات ومراجعة كود وتوثيق ونشر تلقائي للمشاريع.', summaryEn: 'Version control, code review, documentation, and automated project delivery.',
+    samples: {
+      foundation: 'git status\ngit add src/App.tsx\ngit commit -m "feat: add lesson view"',
+      core: 'git switch -c feat/profile-card\n# make one focused change\ngit diff\ngit status',
+      applied: 'git fetch origin\ngit rebase origin/main\n# resolve one conflict carefully\ngit push --force-with-lease',
+      professional: 'pnpm test\npnpm build\n# GitHub Actions runs these checks before deployment',
+    },
+    topics: {
+      foundation: [
+        { ar: 'المستودع وGit status', en: 'Repository and git status' }, { ar: 'المرحلة staging وcommit', en: 'Staging and commits' }, { ar: 'رسائل commit الدلالية', en: 'Meaningful commit messages' }, { ar: 'remote وgit push', en: 'Remotes and git push' }, { ar: 'README وملفات المشروع الأساسية', en: 'README and essential project files' },
+      ],
+      core: [
+        { ar: 'الفروع وخطة التغيير', en: 'Branches and change planning' }, { ar: 'الدمج Merge وrebase', en: 'Merge and rebase' }, { ar: 'حل التعارضات بأمان', en: 'Resolving conflicts safely' }, { ar: 'Pull Request جيد', en: 'A strong pull request' }, { ar: 'Issues وProject boards', en: 'Issues and project boards' },
+      ],
+      applied: [
+        { ar: 'مراجعة الكود والتغذية الراجعة', en: 'Code review and feedback' }, { ar: 'Tags والإصدارات Releases', en: 'Tags and releases' }, { ar: 'GitHub Pages والنشر الثابت', en: 'GitHub Pages and static deployment' }, { ar: 'GitHub Actions للفحص والبناء', en: 'GitHub Actions for checks and builds' }, { ar: 'توثيق قرار هندسي قصير', en: 'Writing a concise engineering decision' },
+      ],
+      professional: [
+        { ar: 'قوالب Issues وPull Requests', en: 'Issue and pull request templates' }, { ar: 'CODEOWNERS وسياسات المراجعة', en: 'CODEOWNERS and review policies' }, { ar: 'الأمان وإدارة الأسرار', en: 'Security and secret management' }, { ar: 'خطة إصدار واسترجاع', en: 'Release and rollback planning' }, { ar: 'مشروع احترافي: إطلاق مستودع جاهز للمراجعة', en: 'Professional project: review-ready repository launch' },
+      ],
+    },
+  },
+  {
+    id: 'sql', ar: 'SQL: بيانات ومنهجية', en: 'SQL: data and design', color: '#30a4db',
+    summaryAr: 'استعلامات وعلاقات وتصميم مخطط وأداء ومعاملات ومشروع بيانات.', summaryEn: 'Queries, relations, schema design, performance, transactions, and a data project.',
+    samples: {
+      foundation: 'CREATE TABLE learners (\n  id INTEGER PRIMARY KEY,\n  name TEXT NOT NULL,\n  xp INTEGER DEFAULT 0\n);',
+      core: 'SELECT track, COUNT(*) AS completed\nFROM lesson_progress\nWHERE completed = 1\nGROUP BY track\nORDER BY completed DESC;',
+      applied: 'SELECT learners.name, projects.title\nFROM learners\nJOIN projects ON projects.learner_id = learners.id\nWHERE projects.published = 1;',
+      professional: 'BEGIN;\nUPDATE learners SET xp = xp + 20 WHERE id = ?;\nINSERT INTO audit_log(action) VALUES ("lesson_completed");\nCOMMIT;',
+    },
+    topics: {
+      foundation: [
+        { ar: 'الجداول والصفوف والأعمدة', en: 'Tables, rows, and columns' }, { ar: 'أنواع البيانات والمفاتيح', en: 'Data types and keys' }, { ar: 'INSERT وSELECT', en: 'INSERT and SELECT' }, { ar: 'WHERE وORDER BY وLIMIT', en: 'WHERE, ORDER BY, and LIMIT' }, { ar: 'UPDATE وDELETE بوعي', en: 'Safe UPDATE and DELETE' },
+      ],
+      core: [
+        { ar: 'الدوال التجميعية والتجميع', en: 'Aggregates and grouping' }, { ar: 'JOIN بين الجداول', en: 'JOINing tables' }, { ar: 'NULL والقيم المفقودة', en: 'NULL and missing values' }, { ar: 'الاستعلامات الفرعية وCTEs', en: 'Subqueries and CTEs' }, { ar: 'القيود Constraints وسلامة البيانات', en: 'Constraints and data integrity' },
+      ],
+      applied: [
+        { ar: 'تصميم مخطط العلاقات', en: 'Relational schema design' }, { ar: 'التطبيع وتقليل التكرار', en: 'Normalization and reduced duplication' }, { ar: 'الفهارس وقراءة خطة الاستعلام', en: 'Indexes and query planning' }, { ar: 'Views وتقارير التقدم', en: 'Views and progress reports' }, { ar: 'معاملات الاستعلام الآمنة', en: 'Parameterized queries' },
+      ],
+      professional: [
+        { ar: 'المعاملات ACID', en: 'ACID transactions' }, { ar: 'الصلاحيات ومبدأ أقل امتياز', en: 'Permissions and least privilege' }, { ar: 'النسخ الاحتياطي والترحيلات', en: 'Backups and migrations' }, { ar: 'مراقبة الأداء والأخطاء', en: 'Performance and error monitoring' }, { ar: 'مشروع احترافي: قاعدة بيانات لوحة تقدم', en: 'Professional project: progress dashboard database' },
+      ],
+    },
+  },
+]
+
+export const tracks: Track[] = blueprints.map((blueprint) => ({
+  id: blueprint.id,
+  title: bi(blueprint.ar, blueprint.en),
+  summary: bi(blueprint.summaryAr, blueprint.summaryEn),
+  color: blueprint.color,
+  level: bi('من الصفر إلى مشروع احترافي', 'Zero to professional project'),
+  stages,
+  lessons: makeLessons(blueprint),
+}))
+
 export const missions = [
-  { id: 'mission-portfolio', title: bi('أطلق صفحة Portfolio', 'Launch a portfolio page'), track: bi('HTML/CSS + GitHub', 'HTML/CSS + GitHub'), summary: bi('ابنِ صفحة تعريف واضحة ثم انشرها مع README منظم.', 'Build a clear profile page, then publish it with a structured README.'), skills: ['HTML', 'CSS', 'Git', 'GitHub Pages'] },
-  { id: 'mission-tracker', title: bi('ابنِ متعقب دراسة', 'Build a study tracker'), track: bi('Python', 'Python'), summary: bi('نظّم جلسات الدراسة واحسب مجموع الدقائق باستخدام وظائف وقوائم.', 'Organize study sessions and calculate total minutes with functions and lists.'), skills: ['Python', 'Functions', 'Lists'] },
-  { id: 'mission-api', title: bi('صمّم بيانات API آمنة', 'Design safe API data'), track: bi('JavaScript + SQL', 'JavaScript + SQL'), summary: bi('مثّل بيانات المتعلم، اعرضها في الواجهة، واستخدم استعلامات بمعاملات.', 'Model learner data, present it in an interface, and use parameterized queries.'), skills: ['JavaScript', 'DOM', 'SQL', 'Security basics'] },
+  { id: 'mission-python', title: bi('مشروع Python: متعقب دراسة', 'Python project: study tracker'), track: bi('Python', 'Python'), summary: bi('حلّل جلسات الدراسة، خزّن البيانات محلياً، واكتب اختبارات للحسابات الأساسية.', 'Analyze study sessions, store local data, and write tests for core calculations.'), skills: ['Python', 'Testing', 'Files'] },
+  { id: 'mission-portfolio', title: bi('مشروع الويب: Portfolio منشور', 'Web project: published portfolio'), track: bi('HTML/CSS + GitHub', 'HTML/CSS + GitHub'), summary: bi('أنشئ صفحة متجاوبة ومتاحة، وثّقها، وانشرها مع رابط مباشر.', 'Create a responsive, accessible page, document it, and publish it with a direct link.'), skills: ['HTML', 'CSS', 'Accessibility', 'GitHub Pages'] },
+  { id: 'mission-dashboard', title: bi('مشروع JavaScript: لوحة تعلم', 'JavaScript project: learning dashboard'), track: bi('JavaScript', 'JavaScript'), summary: bi('ابنِ واجهة حالة تحفظ التقدم محلياً وتعرض حالات تحميل وخطأ واضحة.', 'Build a stateful interface that saves progress locally and exposes clear loading and error states.'), skills: ['JavaScript', 'DOM', 'Async code', 'Local storage'] },
+  { id: 'mission-data', title: bi('مشروع SQL: قاعدة بيانات تقدم', 'SQL project: progress database'), track: bi('SQL', 'SQL'), summary: bi('صمّم مخططاً مترابطاً واكتب استعلامات تقارير وتحقق من صلاحيات الوصول.', 'Design a related schema, write reporting queries, and verify access permissions.'), skills: ['SQL', 'Schema design', 'Joins', 'Transactions'] },
+  { id: 'mission-release', title: bi('مشروع Git: إصدار قابل للمراجعة', 'Git project: reviewable release'), track: bi('Git/GitHub', 'Git/GitHub'), summary: bi('أطلق مشروعاً موثقاً مع فروع وPR واختبارات وسير نشر آلي.', 'Launch a documented project with branches, a PR, tests, and an automated deployment flow.'), skills: ['Git', 'GitHub', 'Code review', 'CI'] },
 ]
