@@ -8,4 +8,4 @@
 - [x] Add safe portfolio and GitHub-readiness guidance without claiming unverified learner achievements.
 - [x] Write unit tests for curriculum integrity, challenge validation, and progress calculations.
 - [x] Add professional repository documentation, governance files, Open Graph metadata, and GitHub Pages workflows.
-- [ ] Publish IraqCode to GitHub Pages, validate the live experience, and add the project to the 9gkc profile repository.
+- [x] Publish IraqCode to GitHub Pages, validate the live experience, and add the project to the 9gkc profile repository.
