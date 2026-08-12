@@ -1,0 +1,9 @@
+{
+  "name": "IraqCode",
+  "short_name": "IraqCode",
+  "description": "Bilingual, project-first programming education for Iraqi learners.",
+  "start_url": "/IraqCode/",
+  "display": "standalone",
+  "background_color": "#07111f",
+  "theme_color": "#07111f"
+}
