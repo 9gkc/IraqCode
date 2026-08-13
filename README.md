@@ -7,6 +7,12 @@
 
 **IraqCode** is an Arabic-first, bilingual programming learning platform for Iraqi learners. It connects focused concepts to checked practice, project-oriented engineering missions, and a learning record stored in the learner's browser. The platform is inspired by the momentum of modern microlearning, while maintaining an original product identity and interface.
 
+## Interface preview
+
+![IraqCode Arabic RTL learning dashboard showing the learning paths, progress indicators, and next-lesson call to action](docs/images/iraqcode-dashboard-ar.webp)
+
+The screenshot above is captured from the live Arabic-first dashboard. **[Open the interactive platform](https://9gkc.github.io/IraqCode/)** to switch languages, explore the five learning paths, and follow a lesson from beginning to end.
+
 ## Live platform
 
 Open the public platform at **[9gkc.github.io/IraqCode](https://9gkc.github.io/IraqCode/)**.
